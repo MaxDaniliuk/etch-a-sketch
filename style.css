@@ -28,10 +28,11 @@
 }
 
 .element {
+    
     flex: 1 1 auto;
     height: 0;
-    /*width: 20%; /* This should be adjusted accordingly by the js that will be adding divs*/
-    /*padding-bottom: 20%; /* Same here. Should be adjusted accordingly by the js that will be adding divs*/
+    width: 6.25%; /* This should be adjusted accordingly by the js that will be adding divs*/
+    padding-bottom: 6.25%; /* Same here. Should be adjusted accordingly by the js that will be adding divs*/
 }
 
 .slide-container {
