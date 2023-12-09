@@ -1,0 +1,40 @@
+*, 
+*::before, 
+*::after {
+    box-sizing: border-box;
+}
+
+.container-body {
+    border: solid black;
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.outer-grid-container {
+    /*background: gray; */
+    border: solid black;
+    width: 500px;
+    min-width: 300px;
+    
+}
+
+.inner-grid-container {
+    height: 0;
+    padding-bottom: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+.element {
+    flex: 1 1 auto;
+    height: 0;
+    /*width: 20%; /* This should be adjusted accordingly by the js that will be adding divs*/
+    /*padding-bottom: 20%; /* Same here. Should be adjusted accordingly by the js that will be adding divs*/
+}
+
+.slide-container {
+    width: 100%;
+}
+
