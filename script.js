@@ -3,6 +3,7 @@ const inputSize = document.querySelector('#size-range');
 let sizeValue = document.querySelector('.size-value');
 sizeValue.innerHTML = `${inputSize.value} x ${inputSize.value}`; 
 makeGrid();
+draw();
 
 inputSize.addEventListener('input', () => {
     sizeValue.innerHTML = `${inputSize.value} x ${inputSize.value}`;
@@ -11,6 +12,8 @@ inputSize.addEventListener('input', () => {
     elements.forEach(element => gridContainer.removeChild(element));
    
     makeGrid(inputSize.value);
+    draw();
+
 });
 
 function makeGrid(size) {
@@ -34,6 +37,30 @@ function makeGrid(size) {
     }
 }
 
+function draw() {
+    let mouseIsDown = false;
+    const gridElements = document.querySelectorAll('.element');
 
+    gridElements.forEach(function (element) {
+        element.addEventListener('mousedown', function() {mouseIsDown = true});
+        element.addEventListener('mouseup', function() {mouseIsDown = false});
 
+        element.addEventListener('mousemove', function() {
+            if (mouseIsDown) {
+                element.style.backgroundColor = 'rgb(0, 0, 0)';
+            }
+        });
+    });
+    //gridElements.forEach(gridElement => gridElement.addEventListener('mousedown', () => {
+    //    gridElement.style.backgroundColor = 'rgb(0, 0, 0)';
+    //}));
+}
+
+const btnClear = document.querySelector('.clear');
+btnClear.addEventListener('click', () => {
+    const gridElements = document.querySelectorAll('.element');
+    gridElements.forEach(function (element) {
+        element.style.backgroundColor = 'rgb(255,255,255)';
+    });
+});
 

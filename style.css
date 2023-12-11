@@ -5,14 +5,14 @@
 }
 
 .container-body {
-    border: solid black;
+    
     display: flex;
     justify-content: space-around;
     
 }
 
 .outer-grid-container {
-    /*background: gray; */
+    
     border: solid black;
     width: 500px;
     min-width: 300px;
@@ -31,8 +31,8 @@
     
     flex: 1 1 auto;
     height: 0;
-    width: 6.25%; /* This should be adjusted accordingly by the js that will be adding divs*/
-    padding-bottom: 6.25%; /* Same here. Should be adjusted accordingly by the js that will be adding divs*/
+    width: 6.25%; /**/
+    padding-bottom: 6.25%; /**/
 }
 
 .slide-container {
