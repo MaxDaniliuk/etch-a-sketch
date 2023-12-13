@@ -2,14 +2,23 @@ const btnClear = document.querySelector('.clear');
 const btnColor = document.querySelector('.color');
 const btnRainBow = document.querySelector('.rainbow');
 const btnEraser = document.querySelector('.eraser');
+
 let singleColorOn;
 let rainBowOn;
 let eraserOn;
+let newColor;
+let colorChange;
 
 let gridContainer = document.querySelector('.inner-grid-container');
 const inputSize = document.querySelector('#size-range');
 let sizeValue = document.querySelector('.size-value');
 sizeValue.innerHTML = `${inputSize.value} x ${inputSize.value}`; 
+
+const colorPicker = document.querySelector('#colorpicker');
+colorPicker.addEventListener('input', () => {
+    newColor = colorPicker.value;
+    colorChange = true;
+});
 
 makeGrid();
 draw();
@@ -34,10 +43,8 @@ btnEraser.addEventListener('click', () => {
 
 inputSize.addEventListener('input', () => {
     sizeValue.innerHTML = `${inputSize.value} x ${inputSize.value}`;
-
     let elements = document.querySelectorAll('.element');
     elements.forEach(element => gridContainer.removeChild(element));
-   
     makeGrid(inputSize.value);
     draw();
 });
@@ -63,38 +70,36 @@ function makeGrid(size) {
     }
 }
 
-function draw(singleColor) {
-    if (singleColor === undefined) {
-        singleColor = 'rgb(0, 0 ,0)';
-    } 
+function draw() {
     let mouseIsDown = false;
     const gridElements = document.querySelectorAll('.element');
-
     gridElements.forEach(function (element) {
-
         element.addEventListener('mousedown', function() {
-            selectDrawingStyle(element, singleColor); 
+            selectDrawingStyle(element, newColor); 
             mouseIsDown = true;
         });
         element.addEventListener('mouseup', function() {mouseIsDown = false});
         
         element.addEventListener('mouseover', function() {
             if (mouseIsDown) {
-                selectDrawingStyle(element, singleColor);
+                selectDrawingStyle(element, newColor);
             }
         });
     });
 }
 
-function selectDrawingStyle (element, singleColor) {
+function selectDrawingStyle (element, newColor) {
     if (singleColorOn) {
-        return element.style.backgroundColor = singleColor;
+        if (colorChange) {
+            return element.style.backgroundColor = newColor;
+        }
+        return element.style.backgroundColor = colorPicker.value;
     } else if (rainBowOn) {
         return element.style.backgroundColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
     } else if (eraserOn) {
         return element.style.backgroundColor = 'rgb(255,255,255)';
     } else {
-        return element.style.backgroundColor = singleColor;
+        return element.style.backgroundColor = 'rgb(0, 0 ,0)';
     }
 }
 
