@@ -2,12 +2,22 @@ const btnClear = document.querySelector('.clear');
 const btnColor = document.querySelector('.color');
 const btnRainBow = document.querySelector('.rainbow');
 const btnEraser = document.querySelector('.eraser');
-
+const btnPrgDark = document.querySelector('.prg-dark');
 let singleColorOn;
 let rainBowOn;
 let eraserOn;
 let newColor;
 let colorChange;
+let brightnessValue = 100;
+let darkeningMode = false;
+
+btnPrgDark.addEventListener('click', () => {
+    if (darkeningMode) {
+        darkeningMode = false;
+    } else {
+        darkeningMode = true;
+    }
+});
 
 let gridContainer = document.querySelector('.inner-grid-container');
 const inputSize = document.querySelector('#size-range');
@@ -18,6 +28,7 @@ const colorPicker = document.querySelector('#colorpicker');
 colorPicker.addEventListener('input', () => {
     newColor = colorPicker.value;
     colorChange = true;
+    singleColorOn = true;
 });
 
 makeGrid();
@@ -39,6 +50,7 @@ btnEraser.addEventListener('click', () => {
     rainBowOn = false;
     singleColorOn= false;
     eraserOn = true;
+    darkeningMode = false;
 });
 
 inputSize.addEventListener('input', () => {
@@ -79,10 +91,21 @@ function draw() {
             mouseIsDown = true;
         });
         element.addEventListener('mouseup', function() {mouseIsDown = false});
+        window.addEventListener('mouseup', function() {mouseIsDown = false});
         
-        element.addEventListener('mouseover', function() {
+        element.addEventListener('mouseenter', function() {
             if (mouseIsDown) {
+                if (brightnessValue <= 0) {
+                    brightnessValue = 100;
+                }
                 selectDrawingStyle(element, newColor);
+            }
+            if (mouseIsDown && darkeningMode) {
+                if (brightnessValue <= 0) {
+                    brightnessValue = 100;
+                }
+                element.style.filter = `brightness(${brightnessValue}%)`;
+                brightnessValue -= 5;
             }
         });
     });
@@ -97,7 +120,7 @@ function selectDrawingStyle (element, newColor) {
     } else if (rainBowOn) {
         return element.style.backgroundColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
     } else if (eraserOn) {
-        return element.style.backgroundColor = 'rgb(255,255,255)';
+        return element.style.backgroundColor = 'rgb(255,255,255)', element.style.filter = `brightness(${100}%)`;
     } else {
         return element.style.backgroundColor = 'rgb(0, 0 ,0)';
     }
@@ -107,7 +130,6 @@ btnClear.addEventListener('click', () => {
     const gridElements = document.querySelectorAll('.element');
     gridElements.forEach(function (element) {
         element.style.backgroundColor = 'rgb(255,255,255)';
+        element.style.filter = `brightness(${100}%)`;
     });
 });
-
-
