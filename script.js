@@ -11,18 +11,13 @@ let colorChange;
 let brightnessValue = 100;
 let darkeningMode = false;
 
-btnPrgDark.addEventListener('click', () => {
-    if (darkeningMode) {
-        darkeningMode = false;
-    } else {
-        darkeningMode = true;
-    }
-});
-
 let gridContainer = document.querySelector('.inner-grid-container');
 const inputSize = document.querySelector('#size-range');
 let sizeValue = document.querySelector('.size-value');
+
 sizeValue.innerHTML = `${inputSize.value} x ${inputSize.value}`; 
+makeGrid();
+draw();
 
 const colorPicker = document.querySelector('#colorpicker');
 colorPicker.addEventListener('input', () => {
@@ -31,8 +26,13 @@ colorPicker.addEventListener('input', () => {
     singleColorOn = true;
 });
 
-makeGrid();
-draw();
+btnPrgDark.addEventListener('click', () => {
+    if (darkeningMode) {
+        darkeningMode = false;
+    } else {
+        darkeningMode = true;
+    }
+});
 
 btnRainBow.addEventListener('click', () => {
     rainBowOn = true
@@ -65,20 +65,12 @@ function makeGrid(size) {
     if (size === undefined) {
         size = 16;
     }
-    outer:
-    for (let i = 0; i < size; i++) {
-        let rowCount = size;
-        for (let j = size; j < size + 1; j) {
-            if (rowCount == 0) {
-                continue outer;
-            }
-            let elem = document.createElement('div')
-            elem.className = 'element';
-            elem.style.width = `${100/size}%`;
-            elem.style.paddingBottom = `${100/size}%`;
-            gridContainer.appendChild(elem);
-            rowCount--;
-        }
+    for (let i = 0; i < size * size; i++) {
+        let elem = document.createElement('div')
+        elem.className = 'element';
+        elem.style.width = `${100/size}%`;
+        elem.style.paddingBottom = `${100/size}%`;
+        gridContainer.appendChild(elem);
     }
 }
 
@@ -114,15 +106,15 @@ function draw() {
 function selectDrawingStyle (element, newColor) {
     if (singleColorOn) {
         if (colorChange) {
-            return element.style.backgroundColor = newColor;
+            return element.style.backgroundColor = newColor, element.style.filter = `brightness(${100}%)`;
         }
-        return element.style.backgroundColor = colorPicker.value;
+        return element.style.backgroundColor = colorPicker.value, element.style.filter = `brightness(${100}%)`;
     } else if (rainBowOn) {
-        return element.style.backgroundColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`;
+        return element.style.backgroundColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`, element.style.filter = `brightness(${100}%)`;
     } else if (eraserOn) {
         return element.style.backgroundColor = 'rgb(255,255,255)', element.style.filter = `brightness(${100}%)`;
     } else {
-        return element.style.backgroundColor = 'rgb(0, 0 ,0)';
+        return element.style.backgroundColor = 'rgb(0, 0, 0)', element.style.filter = `brightness(${100}%)`;
     }
 }
 
