@@ -20,8 +20,17 @@ sizeValue.innerHTML = `${inputSize.value} x ${inputSize.value}`;
 makeGrid();
 draw();
 
+//Could be deleted.. if you don't want to disable eraser this way
+colorPicker.addEventListener('click', () => {
+    if (eraserOn) {
+        btnEraser.style.background = 'rgb(62, 166, 255)';
+        eraserOn = false;
+    }
+});
+
 btnPrgDark.addEventListener('click', () => {
     eraserOn = false;
+    btnEraser.style.background = 'rgb(62, 166, 255)';
     if (darkeningMode) {
         darkeningMode = false;
         btnPrgDark.style.filter = 'brightness(100%)';
@@ -37,13 +46,16 @@ btnRainBow.addEventListener('click', () => {
     eraserOn = false;
     btnRainBow.style.background = 'linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4)';
     btnColor.style.background = 'rgb(62, 166, 255)';
+    btnEraser.style.background = 'rgb(62, 166, 255)';
 });
 
 btnColor.addEventListener('click', () => {
     rainBowOn = false;
     singleColorOn = true;
     eraserOn = false;
+    btnColor.style.background = '#FD6CFD';
     btnRainBow.style.background = 'rgb(62, 166, 255)';
+    btnEraser.style.background = 'rgb(62, 166, 255)';
     
 });
 
@@ -51,6 +63,7 @@ btnEraser.addEventListener('click', () => {
     rainBowOn = false;
     singleColorOn= false;
     eraserOn = true;
+    btnEraser.style.background = '#EFEFEF';
     btnColor.style.background = 'rgb(62, 166, 255)';
     btnRainBow.style.background = 'rgb(62, 166, 255)';
 });
@@ -132,4 +145,5 @@ btnClear.addEventListener('click', () => {
         element.style.backgroundColor = 'rgb(255,255,255)';
         element.style.filter = `brightness(100%)`;
     });
+    btnEraser.style.background = 'rgb(62, 166, 255)';
 });
