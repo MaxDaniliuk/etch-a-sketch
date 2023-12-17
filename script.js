@@ -3,7 +3,7 @@ const btnColor = document.querySelector('.color');
 const btnRainBow = document.querySelector('.rainbow');
 const btnEraser = document.querySelector('.eraser');
 const btnPrgDark = document.querySelector('.prg-dark');
-let singleColorOn;
+let singleColorOn = true;
 let rainBowOn;
 let eraserOn;
 let newColor;
@@ -17,10 +17,10 @@ const inputSize = document.querySelector('#size-range');
 let sizeValue = document.querySelector('.size-value');
 
 sizeValue.innerHTML = `${inputSize.value} x ${inputSize.value}`; 
+btnColor.style.background = '#FD6CFD';
 makeGrid();
 draw();
 
-//Could be deleted.. if you don't want to disable eraser this way
 colorPicker.addEventListener('click', () => {
     if (eraserOn) {
         btnEraser.style.background = 'rgb(62, 166, 255)';
@@ -118,7 +118,7 @@ function draw() {
                 if (eraserOn) {
                     element.style.filter = `brightness(100%)`;
                     brightnessValue = 100;
-                } else {
+                } else if (singleColorOn || rainBowOn) {
                     element.style.filter = `brightness(${brightnessValue}%)`;
                     brightnessValue -= 5;
                 }
@@ -134,8 +134,6 @@ function selectDrawingStyle (element) {
         return element.style.backgroundColor = `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`, element.style.filter = `brightness(100%)`;
     } else if (eraserOn) {
         return element.style.backgroundColor = 'rgb(255,255,255)', element.style.filter = `brightness(100%)`;
-    } else {
-        return element.style.backgroundColor = colorPicker.value, element.style.filter = `brightness(100%)`;
     }
 }
 
